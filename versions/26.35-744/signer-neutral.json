@@ -1,0 +1,68 @@
+{
+  "schema": "ynab-ios-signer-neutral/v1",
+  "versionId": "26.35-744",
+  "component": {
+    "id": "app-group-resolver/v1",
+    "source": "components/app-group-resolver/v1/AppGroupResolver.S",
+    "sourceSha256": "b061f12e44b96e2234e27bfbc92f13435cd91dac8f5c9fb44892ab890da904d7",
+    "payloadSize": 750,
+    "branchInstructionOffsets": [36, 56, 76, 96, 116, 136, 156, 176, 196]
+  },
+  "expectedCarrierSha256": "4560b55327fad975cfa03f3803eecaa855c99ee4a0883a2a2ed26ce58c3e9df7",
+  "outputInventory": {
+    "regularFiles": 387,
+    "machoContainers": 11,
+    "machoSlices": 12,
+    "signatureDirectoriesRemoved": 10,
+    "runtimePatches": 3
+  },
+  "targets": [
+    {
+      "name": "main",
+      "path": "YNAB Evergreen",
+      "sha256": "d1cc306b4f026747cffb4c04103129c8addfa69e307635ca8545af7f3b23da13",
+      "uuid": "7fce917f673f36c2b26d5b25f480eb03",
+      "ownerFunctionVm": "0x100262744",
+      "patchVm": "0x100262900",
+      "patchBytes": "889900d008410191088100d1801b0091010141b2f17b4794",
+      "resolverVm": "0x1019b00a0",
+      "dlopenVm": "0x101445a9c",
+      "dlsymVm": "0x101445aa8"
+    },
+    {
+      "name": "widget",
+      "path": "PlugIns/YNABWidgetExtension.appex/YNABWidgetExtension",
+      "sha256": "dd64ce41e1e04b94628f2aa8f255105e92223fc5681a617ed47216adf62c0cb3",
+      "uuid": "07b9cb20414d322b974529845a0c295b",
+      "ownerFunctionVm": "0x100005acc",
+      "patchVm": "0x100005c88",
+      "patchBytes": "681700f008c11591088100d1801b0091010141b260970a94",
+      "resolverVm": "0x10033c088",
+      "dlopenVm": "0x1002ad744",
+      "dlsymVm": "0x1002ad750"
+    },
+    {
+      "name": "widget-intent",
+      "path": "PlugIns/YNABWidgetIntentHandler.appex/YNABWidgetIntentHandler",
+      "sha256": "e7bdd7de3cf0792ddf6cd25a29bf2cfba154be7e243261930a8876eb067cda08",
+      "uuid": "bccd4075a6583ba78ff5da20bff2bdf4",
+      "ownerFunctionVm": "0x1000057d4",
+      "patchVm": "0x100005990",
+      "patchBytes": "c80b00b008c11c91088100d1801b0091010141b2f9600594",
+      "resolverVm": "0x100196210",
+      "dlopenVm": "0x10015f318",
+      "dlsymVm": "0x10015f324"
+    }
+  ],
+  "forbiddenMarkers": [
+    "YNABServerURLBridge",
+    "YNABOffline",
+    "OrpheusPrivateService",
+    "ynabSelectServerURL"
+  ],
+  "signingContract": {
+    "carrier": "unsigned-resign-required",
+    "supportedSignerFamily": "zsign/eSign/Feather-style signature allocation",
+    "appGroupRule": "The same usable App Group must sort first in the main app and both widget extensions."
+  }
+}

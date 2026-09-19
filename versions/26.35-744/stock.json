@@ -1,0 +1,25 @@
+{
+  "schema": "ynab-ios-stock/v1",
+  "versionId": "26.35-744",
+  "product": "YNAB Evergreen",
+  "marketingVersion": "26.35",
+  "build": "744",
+  "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen",
+  "mainAppPath": "Payload/YNAB Evergreen.app",
+  "input": {
+    "description": "Decrypted stock IPA supplied externally at build time",
+    "filename": "com_youneedabudget_evergreen_YNAB_Evergreen_26_35.ipa",
+    "sha256": "f6aff1df27ce87c21c60b16133c5be958ab3c20ec6c1a2be3be212064a4d1bde"
+  },
+  "inventory": {
+    "regularFiles": 397,
+    "machoContainers": 11,
+    "machoSlices": 12,
+    "signatureDirectories": 10
+  },
+  "toolchainObserved": {
+    "appleClang": "21.0.0 (clang-2100.3.34.2)",
+    "iphoneosSdk": "27.0",
+    "zsign": "1.1.2"
+  }
+}
