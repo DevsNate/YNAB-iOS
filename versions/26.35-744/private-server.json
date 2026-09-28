@@ -1,0 +1,151 @@
+{
+  "schema": "ynab-ios-private-server/v1",
+  "versionId": "26.35-744",
+  "artifactRole": "product-carrier",
+  "expectedCarrierSha256": "e1e544dad421990c86a5b3521a0f578584484f85fcf335f4bed8bf3674bfaec2",
+  "component": {
+    "id": "server-origin/v1",
+    "source": "components/server-origin/v1/YNABServerOrigin.m",
+    "sourceSha256": "4a6cbd67d13f36169240ffe53b9cb46e07ffeeaa5f2382ce8eccf6a16ca4c809",
+    "compiledDylibSha256": "55ad879b02cd69301926fc7ad8497f52d45041b7a8a91837e626d20a70a8fe6b",
+    "compiledDylibSize": 114216,
+    "compiledDylibUuid": "c3b50fb339d23d268b43d230cc4baf93",
+    "installName": "@rpath/YNABServerOrigin.dylib",
+    "packagePath": "Frameworks/YNABServerOrigin.dylib",
+    "defaultsKey": "YNABPrivateServerOrigin",
+    "ownedHosts": [
+      "app.ynab.com",
+      "app.youneedabudget.com"
+    ]
+  },
+  "targets": [
+    {
+      "name": "main",
+      "path": "YNAB Evergreen",
+      "neutralSha256": "d704165aff1fcd64db24784bf6a4c97054cc63460c92f33b3bbf374bb1cbe3f4",
+      "uuid": "7fce917f673f36c2b26d5b25f480eb03"
+    },
+    {
+      "name": "widget",
+      "path": "PlugIns/YNABWidgetExtension.appex/YNABWidgetExtension",
+      "neutralSha256": "9ad4947a4a533cfaa8b566c9c640e901b5834d07c7cad1d9fa9ab9f82501a3e6",
+      "uuid": "07b9cb20414d322b974529845a0c295b"
+    },
+    {
+      "name": "widget-intent",
+      "path": "PlugIns/YNABWidgetIntentHandler.appex/YNABWidgetIntentHandler",
+      "neutralSha256": "86568f8c6b26603dd0b41816ac91947f101373dd36295164c215c86daea05f0e",
+      "uuid": "bccd4075a6583ba78ff5da20bff2bdf4"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "id": "authoritative-server-origin-prefix",
+      "targetPath": "YNAB Evergreen",
+      "fileOffset": "0x565428",
+      "vmAddress": "0x100565428",
+      "beforeHex": "088d8ed2880eaef2684ec7f2e8e5e5f20900fdd2",
+      "afterHex": "080080d21f2003d51f2003d51f2003d50900fcd2"
+    }
+  ],
+  "nativeTextActionBinding": {
+    "factoryVmAddress": "0x1006F0CD8",
+    "sourceTitleCountAndFlags": "0xD000000000000010",
+    "sourceTitleObjectVmAddress": "0x1015B1420",
+    "sourceAccessibilityCountAndFlags": "0xD000000000000016",
+    "sourceAccessibilityObjectVmAddress": "0x1015B1850",
+    "expectedClassSuffix": "InsettableContentButton",
+    "invocationBoundary": "controller lifecycle or one-shot owned-stack mutation on main thread"
+  },
+  "uiBindings": [
+    {
+      "class": "YNAB_Evergreen.SignInViewController",
+      "lifecycle": "viewDidLoad plus optional one-shot asynchronous relocation",
+      "stackIvar": "$__lazy_storage_$_stackView",
+      "initialPositionAnchorIvar": "$__lazy_storage_$_forgotPasswordButton",
+      "optionalFinalPositionAnchorIvar": "$__lazy_storage_$_createAccountButton",
+      "relocationEvent": "exact final-anchor insertion in controller-owned stack",
+      "nativeTextAction": "forgot-password-button-template",
+      "horizontalLayout": "stack-fill",
+      "spacingAfterAnchor": "zero-matching-stock-preceding-action"
+    },
+    {
+      "class": "YNAB_Evergreen.CreateAccountViewController",
+      "lifecycle": "viewDidLoad",
+      "stackIvar": "$__lazy_storage_$_stackView",
+      "positionAnchorIvar": "$__lazy_storage_$_signUpButton",
+      "nativeTextAction": "forgot-password-button-template",
+      "horizontalLayout": "stock-anchor-width-and-center-x",
+      "spacingAfterAnchor": "inherit-preceding"
+    }
+  ],
+  "subscriptionFlowBinding": {
+    "class": "YBAppStatus",
+    "selector": "shouldSkipSubscribeFlow",
+    "hookType": "instance-method",
+    "condition": "valid-normalized-private-origin-stored",
+    "privateOriginResult": true,
+    "otherwise": "preserve-stock-result"
+  },
+  "localNetworkAdmission": {
+    "scope": "stored-normalized-private-development-origin-only",
+    "triggers": [
+      "server-origin-save",
+      "sign-in-viewDidLoad",
+      "create-account-viewDidLoad"
+    ],
+    "request": {
+      "method": "GET",
+      "path": "/health",
+      "timeoutSeconds": 8,
+      "cachePolicy": "reload-ignoring-local-cache"
+    },
+    "retry": {
+      "count": 1,
+      "scope": "health-probe-only"
+    },
+    "neverAutoRetry": [
+      "authentication",
+      "account-creation"
+    ],
+    "failureActions": [
+      "Retry",
+      "Server URL",
+      "Settings"
+    ],
+    "originPersistence": {
+      "sharedValueOwner": "main-app-install-token",
+      "upgrade": "preserve",
+      "uninstallReinstall": "reject-orphaned-shared-origin"
+    }
+  },
+  "routingContract": {
+    "boundary": "stock YB_APP_SERVER URL initialization with request-construction defense",
+    "rewriteSources": [
+      "owned-stock-hosts"
+    ],
+    "unconfiguredBehavior": "owned-requests-fail-locally-through-unsupported-non-network-scheme",
+    "replace": [
+      "scheme",
+      "host",
+      "port"
+    ],
+    "preserve": [
+      "path",
+      "query",
+      "fragment",
+      "method",
+      "headers",
+      "body"
+    ],
+    "httpRule": "loopback, .local, RFC1918, IPv4 link-local, IPv6 unique-local or IPv6 link-local only",
+    "unrelatedTraffic": "stock"
+  },
+  "outputInventory": {
+    "regularFiles": 388,
+    "machoContainers": 12,
+    "machoSlices": 13,
+    "loadCommandsAdded": 3,
+    "runtimeDylibsAdded": 1
+  }
+}

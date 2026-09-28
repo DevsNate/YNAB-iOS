@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build a version-admitted YNAB signer-neutral carrier.
+"""Build a YNAB signer-neutral internal component reference.
 
-This is intentionally narrower than a functional private-server build. It
-patches only the three proven stock App Group owners so they resolve the
-current signer's entitlement, then removes stale signing state using the
-admitted signature-clean packaging contract.
+This is intentionally not a product-admission build. It patches only the three
+proven stock App Group owners so they resolve the current signer's entitlement,
+then removes stale signing state using the accepted internal packaging
+contract.
 """
 
 from __future__ import annotations
@@ -78,13 +78,15 @@ def load_version(version_id: str, derive_carrier_hash: bool = False) -> None:
     stock_path = version_root / "stock.json"
     neutral_path = version_root / "signer-neutral.json"
     if not stock_path.is_file() or not neutral_path.is_file():
-        fail(f"version is not admitted: {version_id}")
+        fail(f"signer-neutral component profile is unavailable: {version_id}")
     stock = json.loads(stock_path.read_text(encoding="utf-8"))
     neutral = json.loads(neutral_path.read_text(encoding="utf-8"))
     if stock.get("schema") != "ynab-ios-stock/v1":
         fail(f"unsupported stock specification: {stock.get('schema')}")
     if neutral.get("schema") != "ynab-ios-signer-neutral/v1":
         fail(f"unsupported neutral specification: {neutral.get('schema')}")
+    if neutral.get("artifactRole") != "internal-component-reference":
+        fail("signer-neutral profile has an invalid artifact role")
     if stock.get("versionId") != version_id or neutral.get("versionId") != version_id:
         fail("version specification identity mismatch")
 
@@ -641,8 +643,8 @@ def build(
         "version_id": VERSION_ID,
         "artifact": output_ipa.name,
         "purpose": (
-            "Resign-required carrier with only signer App Group "
-            "neutrality patches; no private-server feature layer"
+            "Internal resign-required component reference with only signer "
+            "App Group neutrality patches; not a product-admitted carrier"
         ),
         "source": {
             "artifact": input_ipa.name,
@@ -656,6 +658,7 @@ def build(
             "requires_final_signing": True,
             "runtime_signer_neutrality": True,
             "private_server_feature": False,
+            "product_admitted": False,
         },
         "runtime_patches": patch_reports,
         "neutralization": {

@@ -1,6 +1,7 @@
 {
   "schema": "ynab-ios-signer-neutral/v1",
   "versionId": "26.35-744",
+  "artifactRole": "internal-component-reference",
   "component": {
     "id": "app-group-resolver/v1",
     "source": "components/app-group-resolver/v1/AppGroupResolver.S",

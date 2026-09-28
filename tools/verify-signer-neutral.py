@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independently verify a version-admitted YNAB signer-neutral carrier."""
+"""Independently verify a YNAB signer-neutral component reference."""
 
 from __future__ import annotations
 
@@ -59,13 +59,15 @@ def load_version(version_id: str) -> None:
     stock_path = version_root / "stock.json"
     neutral_path = version_root / "signer-neutral.json"
     if not stock_path.is_file() or not neutral_path.is_file():
-        fail(f"version is not admitted: {version_id}")
+        fail(f"signer-neutral component profile is unavailable: {version_id}")
     stock = json.loads(stock_path.read_text(encoding="utf-8"))
     neutral = json.loads(neutral_path.read_text(encoding="utf-8"))
     if stock.get("schema") != "ynab-ios-stock/v1":
         fail(f"unsupported stock specification: {stock.get('schema')}")
     if neutral.get("schema") != "ynab-ios-signer-neutral/v1":
         fail(f"unsupported neutral specification: {neutral.get('schema')}")
+    if neutral.get("artifactRole") != "internal-component-reference":
+        fail("signer-neutral profile has an invalid artifact role")
     if stock.get("versionId") != version_id or neutral.get("versionId") != version_id:
         fail("version specification identity mismatch")
 
@@ -416,6 +418,8 @@ def verify(stock_ipa: pathlib.Path, candidate_ipa: pathlib.Path, receipt_path: p
             fail("receipt output hash mismatch")
         if receipt.get("output", {}).get("profile_sealed") is not True:
             fail("receipt does not represent a sealed-profile build")
+        if receipt.get("output", {}).get("product_admitted") is not False:
+            fail("component receipt must not claim product admission")
 
     resolver_template = compile_resolver()
     with zipfile.ZipFile(stock_ipa, "r") as stock_zip, zipfile.ZipFile(

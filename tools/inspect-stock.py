@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect a decrypted stock YNAB IPA before artifact-profile admission."""
+"""Inspect a decrypted stock YNAB IPA before component/profile authoring."""
 
 from __future__ import annotations
 
@@ -98,11 +98,13 @@ def load_reference(version_id: str | None) -> tuple[dict, dict] | None:
     stock_path = version_root / "stock.json"
     neutral_path = version_root / "signer-neutral.json"
     if not stock_path.is_file() or not neutral_path.is_file():
-        fail(f"reference version is not admitted: {version_id}")
+        fail(f"reference component profile is unavailable: {version_id}")
     stock = json.loads(stock_path.read_text(encoding="utf-8"))
     neutral = json.loads(neutral_path.read_text(encoding="utf-8"))
     if stock.get("versionId") != version_id or neutral.get("versionId") != version_id:
         fail("reference profile identity mismatch")
+    if neutral.get("artifactRole") != "internal-component-reference":
+        fail("reference signer-neutral profile has an invalid artifact role")
     return stock, neutral
 
 
@@ -114,8 +116,8 @@ def classify_reference(
 ) -> tuple[str, str]:
     if exact_input:
         return (
-            "already-admitted",
-            "Use the existing admitted profile; do not create a duplicate.",
+            "already-profiled-input",
+            "Reuse the existing stock and component profiles; product admission requires a sealed combined profile.",
         )
     if same_version_id:
         return (
@@ -130,11 +132,11 @@ def classify_reference(
     if requires_mapping:
         return (
             "requires-target-mapping",
-            "Resolve only changed or missing signer-neutral targets before authoring a profile.",
+            "Resolve every changed or missing protected component target before authoring combined bindings.",
         )
     return (
         "target-compatible",
-        "Reuse unchanged target bindings and author a new immutable profile.",
+        "Reuse unchanged component bindings and author the remaining combined bindings.",
     )
 
 

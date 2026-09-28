@@ -10,6 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Python syntax
-        run: python3 -m py_compile tools/*.py tests/*.py
+        run: python3 -m py_compile cli/*.py tools/*.py tests/*.py
       - name: Artifact profiles
         run: python3 -m unittest discover -s tests -v

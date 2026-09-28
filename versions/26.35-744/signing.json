@@ -1,0 +1,115 @@
+{
+  "schema": "ynab-ios-signing-policy/v1",
+  "versionId": "26.35-744",
+  "artifactRole": "post-sign-policy",
+  "signerBoundary": {
+    "carrier": "profile-unknown-resign-required",
+    "observedSigner": "zsign 1.1.2",
+    "bundleIdentifiersMustRemainStock": true,
+    "ordinaryResourcesMustRemainByteIdentical": true,
+    "runtimeBytesMayChangeOnlyForCodeSignatureMetadata": true
+  },
+  "codeClosure": {
+    "machoContainers": 12,
+    "machoSlices": 13,
+    "signatureDirectories": 10,
+    "signedCodeBundles": [
+      {
+        "path": ".",
+        "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen"
+      },
+      {
+        "path": "Frameworks/AmplitudeCore.framework",
+        "bundleIdentifier": "AmplitudeCore"
+      },
+      {
+        "path": "Frameworks/BrazeKit.framework",
+        "bundleIdentifier": "com.braze.BrazeKit"
+      },
+      {
+        "path": "Frameworks/CastleSDK.framework",
+        "bundleIdentifier": "com.castle.castle-swift"
+      },
+      {
+        "path": "Frameworks/Forethought.framework",
+        "bundleIdentifier": "Forethought"
+      },
+      {
+        "path": "Frameworks/KustomerChat.framework",
+        "bundleIdentifier": "com.kustomer.KustomerChat"
+      },
+      {
+        "path": "Frameworks/RiveRuntime.framework",
+        "bundleIdentifier": "rive.app.ios.runtime.RiveRuntime"
+      },
+      {
+        "path": "Frameworks/SlikBin.framework",
+        "bundleIdentifier": "com.ynab.slik"
+      },
+      {
+        "path": "PlugIns/YNABWidgetExtension.appex",
+        "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen.YNABWidget"
+      },
+      {
+        "path": "PlugIns/YNABWidgetIntentHandler.appex",
+        "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen.YNABWidgetIntentHandler"
+      }
+    ],
+    "entitlementBundles": [
+      {
+        "role": "main",
+        "path": ".",
+        "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen",
+        "requiredEntitlements": [
+          "application-identifier",
+          "com.apple.developer.team-identifier",
+          "com.apple.security.application-groups",
+          "aps-environment",
+          "keychain-access-groups"
+        ]
+      },
+      {
+        "role": "widget",
+        "path": "PlugIns/YNABWidgetExtension.appex",
+        "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen.YNABWidget",
+        "requiredEntitlements": [
+          "application-identifier",
+          "com.apple.developer.team-identifier",
+          "com.apple.security.application-groups"
+        ]
+      },
+      {
+        "role": "widget-intent",
+        "path": "PlugIns/YNABWidgetIntentHandler.appex",
+        "bundleIdentifier": "com.youneedabudget.evergreen.YNAB-Evergreen.YNABWidgetIntentHandler",
+        "requiredEntitlements": [
+          "application-identifier",
+          "com.apple.developer.team-identifier",
+          "com.apple.security.application-groups"
+        ]
+      }
+    ]
+  },
+  "namespacePolicy": {
+    "selection": "lexicographically-smallest-effective-app-group",
+    "allEntitlementBundlesMustConverge": true,
+    "stockAppGroupMustNotBeHardcoded": true
+  },
+  "appleServicePolicy": {
+    "concreteContainerEntitlementsMustBeEmpty": [
+      "com.apple.developer.icloud-container-development-container-identifiers",
+      "com.apple.developer.icloud-container-identifiers",
+      "com.apple.developer.ubiquity-container-identifiers"
+    ],
+    "broadUnusedAuthorityWarnings": [
+      "com.apple.developer.icloud-services",
+      "com.apple.developer.ubiquity-kvstore-identifier",
+      "com.apple.developer.networking.networkextension",
+      "com.apple.developer.networking.vpn.api",
+      "com.apple.developer.healthkit",
+      "com.apple.developer.homekit",
+      "com.apple.developer.family-controls",
+      "com.apple.developer.game-center"
+    ]
+  }
+}
