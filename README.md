@@ -150,9 +150,13 @@ receipt. Invoke it directly for diagnosis or profile authoring:
 The component installs controller-lifecycle hooks on the stock sign-in and
 create-account controllers; it does not scan rendered views or add delayed
 overlays. It stores one normalized origin in the signer-authorized shared App
-Group and substitutes scheme, host and port only for the two stock YNAB app
-server hosts at `NSURLSession` task construction. Login, signup, endpoint
-paths, request bodies and unrelated traffic remain stock.
+Group. It supplies that origin through the stock server-configuration owner
+before startup and retains owned-host rewriting at `NSURLSession` task
+construction. Without a valid origin, owned requests fail locally instead of
+falling back to Stock. Login/signup transports, endpoint paths, request bodies
+and unrelated traffic remain stock. The profiled component also handles the
+private-origin-only post-signup purchase-screen skip and bounded local-network
+health preflight; their contracts and physical acceptance scope live in the KB.
 
 ## Maintain component profiles
 

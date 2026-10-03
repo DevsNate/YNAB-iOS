@@ -17,8 +17,8 @@ resign-required IPA containing both signer neutrality and configurable Server
 URL behavior. Keep those transformations modular and independently verifiable,
 but do not treat or device-accept an intermediate signer-neutral-only IPA as a
 separate product release. The accepted 26.35 signer-neutral implementation is
-the internal working reference for that transformation until the combined
-pipeline is sealed.
+the internal working reference for that transformation within the sealed
+combined pipeline.
 
 The deterministic resign-required carrier is the canonical product artifact.
 Signing is an explicit external adapter, not part of either client
